@@ -81,14 +81,21 @@ void Com_Frame()
 
 	ImGui::Separator();
 
-	if(ImGui::Button("Normal Error"))
-		Com_Error(ERR_NONE, "Normal %s test", "error");
+	if(ImGui::CollapsingHeader("Error Test"))
+	{
+		if(ImGui::Button("Normal Error"))
+			Com_Error(ERR_NONE, "Normal %s test", "error");
 
-	if(ImGui::Button("Fatal Error"))
-		Com_Error(ERR_FATAL, "Fatal %s test", "error");
+		ImGui::SameLine();
 
-	if(ImGui::Button("Drop Error"))
-		Com_Error(ERR_DROP, "Drop %s test", "error");
+		if(ImGui::Button("Fatal Error"))
+			Com_Error(ERR_FATAL, "Fatal %s test", "error");
+
+		ImGui::SameLine();
+
+		if(ImGui::Button("Drop Error"))
+			Com_Error(ERR_DROP, "Drop %s test", "error");
+	}
 
 	ImGui::Separator(); /* Resolution */
 
