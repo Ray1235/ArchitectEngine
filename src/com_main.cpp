@@ -126,21 +126,22 @@ void Com_Printf(char * fmt, ...)
 
 }
 
-void Com_ErrorEx(int level, const char * fmt, ...)
-{
-	char * result = new char[1024];
-	va_list args;
-	va_start(args, fmt);
-	vsprintf(result, fmt, args);
-	Com_ErrorEx(level, result);
-	va_end(args);
-}
-
 void Com_ErrorEx(int level, char * source, char * msg)
 {
 	printf("ERROR: %s\n%s\n", source, msg);
 
-#ifdef WIN32
+	if (level > ERR_NONE)
+	{
+		al_show_native_message_box(
+			R_GetDisplay(),
+			"Error",
+			source,
+			msg,
+			NULL,
+			ALLEGRO_MESSAGEBOX_ERROR);
+	}
+
+#ifdef _WIN32
 	if(IsDebuggerPresent())
 	{
 		if(level > ERR_NONE)
@@ -149,17 +150,6 @@ void Com_ErrorEx(int level, char * source, char * msg)
 		}
 	}
 #endif
-
-	if(level > ERR_NONE)
-	{	
-		al_show_native_message_box(
-			R_GetDisplay(),
-			"Error",
-			source,
-			msg,
-   			NULL,
-   			ALLEGRO_MESSAGEBOX_ERROR);
-	}
 
 	if(level == ERR_FATAL)
 	{

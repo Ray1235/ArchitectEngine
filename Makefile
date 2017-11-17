@@ -5,7 +5,10 @@ ALLEGRO_LIBS=allegro-5 allegro_acodec-5 allegro_audio-5 allegro_color-5 allegro_
 LIBS=pkg-config --cflags --libs $(ALLEGRO_LIBS)
 OUTPUT=ArchitectEngine
 
-SOURCE_FILES=src/main.cpp src/com_main.cpp src/renderer/r_main.cpp src/renderer/r_display.cpp src/ui/ui_common.cpp src/ui/ui_imgui.cpp src/ui/imgui/imgui.cpp src/ui/imgui/imgui_demo.cpp src/ui/imgui/imgui_draw.cpp
+ENGINE_SOURCE_FILES=src/main.cpp src/com_main.cpp src/renderer/r_main.cpp src/renderer/r_display.cpp src/ui/ui_common.cpp src/ui/ui_imgui.cpp src/ui/imgui/imgui.cpp src/ui/imgui/imgui_demo.cpp src/ui/imgui/imgui_draw.cpp
 
-Game: $(SOURCE_FILES)
-	$(CC) $(CFLAGS) $(SOURCE_FILES) -o build/$(OUTPUT) `$(LIBS)`
+engine: $(ENGINE_SOURCE_FILES)
+	$(CC) $(CFLAGS) $(ENGINE_SOURCE_FILES) -o build/$(OUTPUT) `$(LIBS)`
+
+game:
+	echo "Not implemented yet"

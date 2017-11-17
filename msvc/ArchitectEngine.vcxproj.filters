@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Renderer">
+      <UniqueIdentifier>{f9f2a2cc-46a9-443d-8da0-ac829b791c6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{467898a5-ec3f-44e6-a080-f4d345592a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\ImGui">
+      <UniqueIdentifier>{f44dd0d9-8c03-486c-8ee0-168b844afda6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\com_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\imgui\imgui.cpp">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\imgui\imgui_demo.cpp">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\imgui\imgui_draw.cpp">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\ui_common.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\ui_imgui.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\r_display.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer\r_main.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\com_main.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\imgui\imconfig.h">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\imgui\imgui.h">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\imgui\imgui_internal.h">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\imgui\stb_rect_pack.h">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\imgui\stb_textedit.h">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\imgui\stb_truetype.h">
+      <Filter>Source Files\UI\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\ui_common.h">
+      <Filter>Source Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\ui_imgui.h">
+      <Filter>Source Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\r_display.h">
+      <Filter>Source Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\r_main.h">
+      <Filter>Source Files\Renderer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
