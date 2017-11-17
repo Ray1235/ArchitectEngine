@@ -2,6 +2,8 @@
 #include "common.h"
 #include <allegro5/allegro.h>
 
+#define DEFINE_ASSET_TYPE(name, limit) {name, #name, limit}
+
 class A_Asset {
 public:
 	virtual void Precache() = 0;
@@ -20,11 +22,12 @@ enum
 
 typedef struct assetType_s {
 	int type;
+	char* name;
 	int maxLimit;
 } assetType_t;
 
 static assetType_t DB_AssetTypes[] = {
-	{ASSET_TYPE_MATERIAL, 1024},
+	DEFINE_ASSET_TYPE(ASSET_TYPE_MATERIAL, 1024),
 };
 
 static std::vector<A_Asset *> * g_AssetList;

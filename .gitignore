@@ -1,2 +1,9 @@
 build/
 .vscode/
+/msvc/packages
+/msvc/imgui.ini
+/msvc/Debug
+/msvc/ArchitectEngine.vcxproj.user
+/msvc/Architect.VC.VC.opendb
+/msvc/Architect.VC.db
+/msvc/.vs/Architect/v14
