@@ -41,7 +41,7 @@ void A_Material::Unload()
 
 bool R_MaterialSystem_Init()
 {
-	//R_PrecacheMaterial("default");
+	R_PrecacheMaterial("default");
 	return true;
 }
 
