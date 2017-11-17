@@ -1,4 +1,5 @@
-build/
+*/ArchitectEngine
+*/imgui.ini
 .vscode/
 /msvc/packages
 /msvc/imgui.ini

@@ -1,0 +1,3 @@
+[submodule "build/main"]
+	path = build/main
+	url = https://github.com/Ray1235/ArchitectGame.git
