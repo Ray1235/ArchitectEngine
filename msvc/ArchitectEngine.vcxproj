@@ -165,21 +165,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\com_assetdb.cpp" />
     <ClCompile Include="..\src\com_main.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\renderer\r_display.cpp" />
     <ClCompile Include="..\src\renderer\r_main.cpp" />
+    <ClCompile Include="..\src\renderer\r_material.cpp" />
     <ClCompile Include="..\src\ui\imgui\imgui.cpp" />
     <ClCompile Include="..\src\ui\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\src\ui\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\src\ui\ui_atoms.cpp" />
     <ClCompile Include="..\src\ui\ui_common.cpp" />
     <ClCompile Include="..\src\ui\ui_imgui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common.h" />
+    <ClInclude Include="..\src\com_assetdb.h" />
     <ClInclude Include="..\src\com_main.h" />
     <ClInclude Include="..\src\renderer\r_display.h" />
     <ClInclude Include="..\src\renderer\r_main.h" />
+    <ClInclude Include="..\src\renderer\r_material.h" />
     <ClInclude Include="..\src\ui\imgui\imconfig.h" />
     <ClInclude Include="..\src\ui\imgui\imgui.h" />
     <ClInclude Include="..\src\ui\imgui\imgui_internal.h" />
@@ -190,6 +195,7 @@
     <ClInclude Include="..\src\ui\ui_imgui.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Makefile" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

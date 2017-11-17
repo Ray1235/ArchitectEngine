@@ -5,7 +5,19 @@ ALLEGRO_LIBS=allegro-5 allegro_acodec-5 allegro_audio-5 allegro_color-5 allegro_
 LIBS=pkg-config --cflags --libs $(ALLEGRO_LIBS)
 OUTPUT=ArchitectEngine
 
-ENGINE_SOURCE_FILES=src/main.cpp src/com_main.cpp src/renderer/r_main.cpp src/renderer/r_display.cpp src/ui/ui_common.cpp src/ui/ui_imgui.cpp src/ui/imgui/imgui.cpp src/ui/imgui/imgui_demo.cpp src/ui/imgui/imgui_draw.cpp
+ENGINE_SOURCE_FILES= \
+src/main.cpp \
+src/com_main.cpp \
+src/renderer/r_main.cpp \
+src/renderer/r_display.cpp \
+src/renderer/r_material.cpp \
+src/com_assetdb.c \
+src/ui/ui_imgui.cpp \
+src/ui/ui_atoms.cpp \
+src/ui/ui_common.cpp \
+src/ui/imgui/imgui.cpp \
+src/ui/imgui/imgui_demo.cpp \
+src/ui/imgui/imgui_draw.cpp
 
 engine: $(ENGINE_SOURCE_FILES)
 	$(CC) $(CFLAGS) $(ENGINE_SOURCE_FILES) -o build/$(OUTPUT) `$(LIBS)`
