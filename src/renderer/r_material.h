@@ -2,8 +2,8 @@
 #include "../common.h"
 #include <allegro5/allegro.h>
 
-#define MATERIAL_PATH "materials/"
-#define IMAGE_PATH "images/"
+#define MATERIAL_PATH "main/materials/"
+#define IMAGE_PATH "main/images/"
 
 class A_Material : public A_Asset {
 public:

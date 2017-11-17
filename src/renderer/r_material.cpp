@@ -18,11 +18,11 @@ void A_Material::Precache()
 	xml_node<> *matN = mat.first_node("material");
 	xml_node<> *colorN = matN->first_node("color");
 	xml_node<> *emissiveN = matN->first_node("emissive");
-	if (colorN)
+	if (colorN && colorN->value())
 	{
 		color = al_load_bitmap(colorN->value());
 	}
-	if (emissiveN)
+	if (emissiveN && emissiveN->value())
 	{
 		isEmissive = true;
 		emissive = al_load_bitmap(emissiveN->value());
@@ -41,7 +41,7 @@ void A_Material::Unload()
 
 bool R_MaterialSystem_Init()
 {
-	R_PrecacheMaterial("default");
+	//R_PrecacheMaterial("default");
 	return true;
 }
 

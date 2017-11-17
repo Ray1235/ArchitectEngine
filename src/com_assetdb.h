@@ -4,6 +4,7 @@
 
 class A_Asset {
 public:
+
 	virtual void Precache() = 0;
 	virtual void Unload() = 0;
 	

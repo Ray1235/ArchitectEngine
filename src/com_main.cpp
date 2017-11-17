@@ -18,6 +18,9 @@ void Com_Init()
 		Com_Error(ERR_FATAL, "Failed to initialize Allegro 5 Native Dialog Addon", "");
 	}
 
+	//al_set_physfs_file_interface();
+	//PHYSFS_mount("main", "", 0);
+
 	if(!al_init_image_addon())
 	{
 		Com_Error(ERR_FATAL, "Failed to initialize Allegro 5 Image Addon", "");
