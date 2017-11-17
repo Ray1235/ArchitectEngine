@@ -63,6 +63,8 @@ void Com_Init()
 	}
 }
 
+static int currentAssetListType = 0;
+
 void Com_Frame()
 {
 	ALLEGRO_EVENT ev;
@@ -75,6 +77,11 @@ void Com_Frame()
 	ImGui::Text("%.1f FPS (%.3f ms/frame)",
 		ImGui::GetIO().Framerate,
 		1000.0f / ImGui::GetIO().Framerate);
+	ImGui::End();
+
+	ImGui::Begin("Asset List");
+	ImGui::InputInt("Type", &currentAssetListType);
+
 	ImGui::End();
 
 	ImGui::Begin("Main"); /* Main game debug window */
