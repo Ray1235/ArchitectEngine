@@ -7,6 +7,12 @@ bool R_Init()
 	{
 		return false;
 	}
+
+	if (!R_MaterialSystem_Init())
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -17,7 +23,7 @@ void R_Shutdown()
 
 void R_BeginFrame()
 {
-	al_clear_to_color(al_map_rgba(0, 0, 0, 255));
+	al_clear_to_color(al_map_rgba(255, 128, 0, 255));
 }
 
 void R_EndFrame()

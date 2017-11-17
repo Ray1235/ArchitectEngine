@@ -67,12 +67,14 @@ void Com_Frame()
 	{
 		UI_ImGui_ProcessEvent(&ev);
 	}
+	ImGui::SetNextWindowPos(ImVec2(2, 2));
+	ImGui::Begin("Performance", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_ShowBorders);
+	ImGui::Text("%.1f FPS (%.3f ms/frame)",
+		ImGui::GetIO().Framerate,
+		1000.0f / ImGui::GetIO().Framerate);
+	ImGui::End();
 
 	ImGui::Begin("Main"); /* Main game debug window */
-
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-		1000.0f/ImGui::GetIO().Framerate,
-		ImGui::GetIO().Framerate);
 
 	if(ImGui::Button("Close game"))
 	{

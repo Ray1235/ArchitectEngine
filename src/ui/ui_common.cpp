@@ -21,6 +21,11 @@ void UI_BeginFrame()
 	UI_ImGui_NewFrame();
 }
 
+void UI_Frame()
+{
+
+}
+
 void UI_EndFrame()
 {
 	UI_ImGui_EndFrame();
