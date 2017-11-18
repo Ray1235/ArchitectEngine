@@ -41,6 +41,11 @@ void Com_Init()
 		Com_Error(ERR_FATAL, "Failed to initialize mouse", "");
 	}
 
+	if(!AssetDB_Init())
+	{
+		Com_Error(ERR_FATAL, "Failed to initialize AssetDB", "");
+	}
+
 	if(!R_Init())
 	{
 		Com_Error(ERR_FATAL, "Failed to initialize the renderer", "");
@@ -81,7 +86,13 @@ void Com_Frame()
 
 	ImGui::Begin("Asset List");
 	ImGui::InputInt("Type", &currentAssetListType);
-
+	if(currentAssetListType < ASSET_TYPE_MAX && currentAssetListType >= 0)
+	{
+		for(int i = 0; i < g_AssetList[currentAssetListType].size(); i++)
+		{
+			if(g_AssetList[currentAssetListType][i] != NULL) ImGui::Selectable(g_AssetList[currentAssetListType][i]->name);
+		}
+	}
 	ImGui::End();
 
 	ImGui::Begin("Main"); /* Main game debug window */

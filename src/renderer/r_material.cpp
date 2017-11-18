@@ -41,7 +41,7 @@ void A_Material::Unload()
 
 bool R_MaterialSystem_Init()
 {
-	//R_PrecacheMaterial("default");
+	R_PrecacheMaterial("default");
 	return true;
 }
 
@@ -56,7 +56,7 @@ A_Material * R_PrecacheMaterial(char * name)
 	mat->name = (char *)malloc(strlen(name) + 1);
 	strcpy(mat->name, name);
 	mat->Precache();
-	AssetDB_AddAsset<ASSET_TYPE_MATERIAL>(mat);
+	AssetDB_AddAsset(ASSET_TYPE_MATERIAL, mat);
 	return mat;
 }
 
