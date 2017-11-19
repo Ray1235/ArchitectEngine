@@ -3,14 +3,12 @@
 #include <allegro5/allegro.h>
 
 #define MATERIAL_PATH "main/materials/"
-#define IMAGE_PATH "main/images/"
 
 class A_Material : public A_Asset {
 public:
-	char * name;
 	bool isEmissive;
-	ALLEGRO_BITMAP * color;
-	ALLEGRO_BITMAP * emissive;
+	A_Image * color;
+	A_Image * emissive;
 
 	void Precache();
 	void Unload();

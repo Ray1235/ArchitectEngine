@@ -8,3 +8,5 @@
 /msvc/Architect.VC.VC.opendb
 /msvc/Architect.VC.db
 /msvc/.vs/Architect/v14
+/msvc/x64/Debug
+/src/com_discord_secret.h

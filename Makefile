@@ -12,6 +12,7 @@ ENGINE_SOURCE_FILES= \
 src/main.cpp \
 src/com_main.cpp \
 src/renderer/r_main.cpp \
+src/renderer/r_image.cpp \
 src/renderer/r_display.cpp \
 src/renderer/r_material.cpp \
 src/com_assetdb.cpp \

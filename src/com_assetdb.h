@@ -17,6 +17,7 @@ public:
 
 enum
 {
+	ASSET_TYPE_IMAGE,
 	ASSET_TYPE_MATERIAL,
 	ASSET_TYPE_MAX
 };
@@ -28,11 +29,17 @@ typedef struct assetType_s {
 } assetType_t;
 
 static assetType_t DB_AssetTypes[] = {
-	DEFINE_ASSET_TYPE(ASSET_TYPE_MATERIAL, 1024),
+	DEFINE_ASSET_TYPE(ASSET_TYPE_IMAGE, 4096),
+	DEFINE_ASSET_TYPE(ASSET_TYPE_MATERIAL, 4096),
 };
 
-static std::vector<A_Asset *> g_AssetList[ASSET_TYPE_MAX];
+extern std::vector<A_Asset *> g_AssetList[ASSET_TYPE_MAX];
 
 bool AssetDB_Init();
 
+void AssetDB_Shutdown();
+
 void AssetDB_AddAsset(int type, A_Asset * asset);
+int AssetDB_GetAssetCount(int type);
+
+bool AssetDB_ImGui_GetTypes(void* ptr, int index, const char** output);

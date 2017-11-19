@@ -1,4 +1,5 @@
 #include "common.h"
+#include "com_discord.h"
 
 static int targetRes[2];
 ALLEGRO_EVENT_QUEUE* g_EventQueue;
@@ -66,15 +67,23 @@ void Com_Init()
 	{
 		Com_Error(ERR_FATAL, "Failed to initalize the UI System", "");
 	}
+
+	Com_Discord_Init();
 }
 
 static int currentAssetListType = 0;
+
+float nextDiscordPresenceUpdate = 0.0f;
 
 void Com_Frame()
 {
 	ALLEGRO_EVENT ev;
 	while (al_get_next_event(g_EventQueue, &ev))
 	{
+		if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+		{
+			shouldClose = true;
+		}
 		UI_ImGui_ProcessEvent(&ev);
 	}
 	ImGui::SetNextWindowPos(ImVec2(2, 2));
@@ -84,13 +93,33 @@ void Com_Frame()
 		1000.0f / ImGui::GetIO().Framerate);
 	ImGui::End();
 
-	ImGui::Begin("Asset List");
-	ImGui::InputInt("Type", &currentAssetListType);
-	if(currentAssetListType < ASSET_TYPE_MAX && currentAssetListType >= 0)
+	ImGui::Begin("Assets");
+	//ImGui::InputInt("Type", &currentAssetListType);
+	const char* preview_text = NULL;
+	ImGui::Combo("Type", &currentAssetListType, AssetDB_ImGui_GetTypes, NULL, ASSET_TYPE_MAX+1);
+	if (currentAssetListType <= ASSET_TYPE_MAX && currentAssetListType > 0)
 	{
-		for(int i = 0; i < g_AssetList[currentAssetListType].size(); i++)
+		ImGui::LabelText(va("%d/%d", AssetDB_GetAssetCount(currentAssetListType - 1), DB_AssetTypes[currentAssetListType - 1].maxLimit), "Asset Count:");
+		for (int i = 0; i < g_AssetList[currentAssetListType - 1].size(); i++)
 		{
-			if(g_AssetList[currentAssetListType][i] != NULL) ImGui::Selectable(g_AssetList[currentAssetListType][i]->name);
+			if (g_AssetList[currentAssetListType - 1][i] != NULL) ImGui::Text(va("%s %s", g_AssetList[currentAssetListType - 1][i]->name, g_AssetList[currentAssetListType - 1][i]->isLoaded ? "(loaded)" : "(unloaded)"));
+		}
+	}
+	if (currentAssetListType == 0)
+	{
+		{
+			for (int i = 0; i < ASSET_TYPE_MAX; i++)
+			{
+				if (ImGui::CollapsingHeader(va("%s##AssetI%d", DB_AssetTypes[i].name, i)))
+				{
+					ImGui::Indent();
+					for (int o = 0; o < g_AssetList[i].size(); o++)
+					{
+						if (g_AssetList[i][o] != NULL) ImGui::Text(va("%s %s", g_AssetList[i][o]->name, g_AssetList[i][o]->isLoaded ? "(loaded)" : "(unloaded)"));
+					}
+					ImGui::Unindent();
+				}
+			}
 		}
 	}
 	ImGui::End();
@@ -130,11 +159,29 @@ void Com_Frame()
 	}
 
 	ImGui::End();
+
+	if (nextDiscordPresenceUpdate < al_get_time())
+	{
+		nextDiscordPresenceUpdate = al_get_time() + 1.0f;
+		Com_Discord_UpdatePresence();
+	}
 }
 
 void Com_Shutdown()
 {
+	Com_Discord_Shutdown();
+	UI_Shutdown();
+	al_destroy_event_queue(g_EventQueue);
+	R_Shutdown();
+	AssetDB_Shutdown();
 
+	al_uninstall_mouse();
+	al_uninstall_keyboard();
+	al_shutdown_primitives_addon();
+	al_shutdown_image_addon();
+	al_shutdown_native_dialog_addon();
+
+	al_uninstall_system();
 }
 
 char * va(const char * fmt, ...)

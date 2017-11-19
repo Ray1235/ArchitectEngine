@@ -17,6 +17,6 @@ int main(int argc, char *argv[])
 		R_EndFrame();
 	}
 
-	UI_Shutdown();
-	R_Shutdown();
+	Com_Shutdown();
+	return 0;
 }

@@ -3,6 +3,11 @@
 #ifdef _WIN32
 #define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
+
+#ifdef _M_AMD64
+#include <discord-rpc.h>
+#endif
+
 #endif
 
 #include <iostream>
@@ -22,6 +27,7 @@
 #include "com_assetdb.h"
 
 #include "renderer/r_main.h"
+#include "renderer/r_image.h"
 #include "renderer/r_material.h"
 #include "renderer/r_display.h"
 

@@ -10,22 +10,30 @@ void A_Material::Precache()
 	{
 		Com_Error(ERR_FATAL, "Tried to load a non-existent material %s", this->name);
 	}
-	char *xml_content = (char *)malloc(al_fsize(f)+1);
+	int fsize = al_fsize(f);
+	char *xml_content = (char *)calloc(al_fsize(f)+1, sizeof(char));
 	al_fread(f, xml_content, al_fsize(f));
 	xml_document<> mat;
 	mat.parse<0>(xml_content);
 	
 	xml_node<> *matN = mat.first_node("material");
+	if (!matN)
+	{
+		Com_Error(ERR_NONE, "Material %s exists, but is invalid", this->name);
+		mat.clear();
+		free(xml_content);
+		return;
+	}
 	xml_node<> *colorN = matN->first_node("color");
 	xml_node<> *emissiveN = matN->first_node("emissive");
 	if (colorN && colorN->value())
 	{
-		color = al_load_bitmap(colorN->value());
+		//color = al_load_bitmap(colorN->value());
 	}
 	if (emissiveN && emissiveN->value())
 	{
 		isEmissive = true;
-		emissive = al_load_bitmap(emissiveN->value());
+		//emissive = al_load_bitmap(emissiveN->value());
 	}
 	mat.clear();
 	free(xml_content);
@@ -34,8 +42,8 @@ void A_Material::Precache()
 
 void A_Material::Unload()
 {
-	if(color) al_destroy_bitmap(color);
-	if(emissive) al_destroy_bitmap(emissive);
+	//if(color) al_destroy_bitmap(color);
+	//if(emissive) al_destroy_bitmap(emissive);
 	isLoaded = false;
 }
 

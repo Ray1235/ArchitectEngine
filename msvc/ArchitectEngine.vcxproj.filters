@@ -52,6 +52,12 @@
     <ClCompile Include="..\src\com_assetdb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\renderer\r_image.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\com_discord.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\com_main.h">
@@ -94,6 +100,15 @@
       <Filter>Source Files\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\com_assetdb.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer\r_image.h">
+      <Filter>Source Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\com_discord.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\com_discord_secret.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
