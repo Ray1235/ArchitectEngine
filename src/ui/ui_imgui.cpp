@@ -1,5 +1,7 @@
 #include <stdint.h>     // uint64_t
 #include <cstring>      // memcpy
+#include <cstdio>
+#include "../common.h"
 #include "imgui/imgui.h"
 #include "ui_imgui.h"
 #include <allegro5/allegro.h>
@@ -8,6 +10,8 @@
 #ifdef _WIN32
 #include <allegro5/allegro_windows.h>
 #endif
+
+#define PRINT_PTR(ptr) printf(#ptr": %d\n", ptr);
 
 // Data
 static ALLEGRO_DISPLAY*         g_Display = NULL;
@@ -68,7 +72,14 @@ void UI_ImGui_RenderDrawLists(ImDrawData* draw_data)
             {
                 ALLEGRO_BITMAP* texture = (ALLEGRO_BITMAP*)pcmd->TextureId;
                 al_set_clipping_rectangle(pcmd->ClipRect.x, pcmd->ClipRect.y, pcmd->ClipRect.z-pcmd->ClipRect.x, pcmd->ClipRect.w-pcmd->ClipRect.y);
-                al_draw_indexed_prim(&vertices[0], g_VertexDecl, texture, &indices[idx_offset], pcmd->ElemCount, ALLEGRO_PRIM_TRIANGLE_LIST);
+				try
+				{
+					al_draw_indexed_prim(&vertices[0], g_VertexDecl, texture, &indices[idx_offset], pcmd->ElemCount, ALLEGRO_PRIM_TRIANGLE_LIST);
+				}
+				catch (char *e)
+				{
+					Com_Error(ERR_NONE, "Something bad happened");
+				}
             }
             idx_offset += pcmd->ElemCount;
         }

@@ -46,6 +46,27 @@ int AssetDB_GetAssetCount(int type)
 	return res;
 }
 
+A_Asset * AssetDB_GetAsset(int type, int index)
+{
+	assert(type < ASSET_TYPE_MAX && type >= 0);
+	assert(index < g_AssetList[type].size());
+	assert(index >= 0);
+	assert(g_AssetList[type][index] != 0);
+	return g_AssetList[type][index];
+}
+
+A_Asset * AssetDB_GetAssetByName(int type, char * name)
+{
+	for (int i = 0; i < g_AssetList[type].size(); i++)
+	{
+		if (strcmp(g_AssetList[type][i]->name, name) == 0)
+		{
+			return g_AssetList[type][i];
+		}
+	}
+	return nullptr;
+}
+
 bool AssetDB_ImGui_GetTypes(void * ptr, int index, const char ** output)
 {
 	if (index > 0 && index <= ASSET_TYPE_MAX)

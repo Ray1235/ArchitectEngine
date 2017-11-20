@@ -42,4 +42,7 @@ void AssetDB_Shutdown();
 void AssetDB_AddAsset(int type, A_Asset * asset);
 int AssetDB_GetAssetCount(int type);
 
+A_Asset * AssetDB_GetAsset(int type, int index);
+A_Asset * AssetDB_GetAssetByName(int type, char * name);
+
 bool AssetDB_ImGui_GetTypes(void* ptr, int index, const char** output);

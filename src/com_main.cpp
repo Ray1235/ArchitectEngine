@@ -3,6 +3,7 @@
 
 static int targetRes[2];
 ALLEGRO_EVENT_QUEUE* g_EventQueue;
+static bool testWindow = true;
 
 void Com_Init()
 {
@@ -93,6 +94,8 @@ void Com_Frame()
 		1000.0f / ImGui::GetIO().Framerate);
 	ImGui::End();
 
+	ImGui::ShowTestWindow(&testWindow);
+
 	ImGui::Begin("Assets");
 	//ImGui::InputInt("Type", &currentAssetListType);
 	const char* preview_text = NULL;
@@ -102,7 +105,47 @@ void Com_Frame()
 		ImGui::LabelText(va("%d/%d", AssetDB_GetAssetCount(currentAssetListType - 1), DB_AssetTypes[currentAssetListType - 1].maxLimit), "Asset Count:");
 		for (int i = 0; i < g_AssetList[currentAssetListType - 1].size(); i++)
 		{
-			if (g_AssetList[currentAssetListType - 1][i] != NULL) ImGui::Text(va("%s %s", g_AssetList[currentAssetListType - 1][i]->name, g_AssetList[currentAssetListType - 1][i]->isLoaded ? "(loaded)" : "(unloaded)"));
+			A_Asset * asset;
+			if ((asset = AssetDB_GetAsset(currentAssetListType - 1, i)) != NULL)
+			{
+				if (ImGui::CollapsingHeader(va("%s %s##asset_%d_%d", asset->name, asset->isLoaded ? "(loaded)" : "(unloaded)", currentAssetListType - 1, i)))
+				{
+					if (asset->isLoaded)
+					{
+						if (currentAssetListType - 1 == ASSET_TYPE_IMAGE)
+						{
+							if (((A_Image *)asset)->bitmap)
+							{
+								ImGui::Image(((A_Image *)asset)->bitmap, ImVec2(32, 32));
+								if (ImGui::IsItemHovered())
+								{
+									ImGui::BeginTooltip();
+									ImGui::Text("Size: %dx%d", al_get_bitmap_width(((A_Image *)asset)->bitmap), al_get_bitmap_height(((A_Image *)asset)->bitmap));
+									ImGui::EndTooltip();
+								}
+							}
+						}
+						else if (currentAssetListType - 1 == ASSET_TYPE_MATERIAL)
+						{
+							ImGui::Text("Color map: %s", ((A_Material *)asset)->color->name);
+							if(((A_Material *)asset)->isEmissive)
+								ImGui::Text("Emissive map: %s", ((A_Material *)asset)->emissive->name);
+						}
+						if(0) // damn, this is broken as hell //if (ImGui::Button(va("Unload asset##assetl_%d_%d", currentAssetListType - 1, i)))
+						{
+							asset->Unload();
+						}
+					}
+					else
+					{
+						ImGui::Text("This asset is currently unloaded, but you can force load it.");
+						if (ImGui::Button(va("Force load##assetl_%d_%d", currentAssetListType - 1, i)))
+						{
+							asset->Precache();
+						}
+					}
+				}
+			}
 		}
 	}
 	if (currentAssetListType == 0)
@@ -165,6 +208,8 @@ void Com_Frame()
 		nextDiscordPresenceUpdate = al_get_time() + 1.0f;
 		Com_Discord_UpdatePresence();
 	}
+
+	//al_draw_bitmap(((A_Image *)g_AssetList[ASSET_TYPE_IMAGE][0])->bitmap, 32, 32, 0);
 }
 
 void Com_Shutdown()
