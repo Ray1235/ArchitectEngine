@@ -18,7 +18,10 @@ public:
 bool R_MaterialSystem_Init();
 int R_GetMaterialCount();
 
-void R_CreateDefaultMaterial();
+void R_CreateDefaultMaterials();
+
+extern A_Material * defaultMaterial;
+extern A_Material * whiteMaterial;
 
 A_Material * R_PrecacheMaterial(char * name);
 void R_UnloadMaterial(A_Material * material);

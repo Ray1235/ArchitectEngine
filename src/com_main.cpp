@@ -207,6 +207,8 @@ void Com_Frame()
 	}
 
 	//al_draw_bitmap(((A_Image *)g_AssetList[ASSET_TYPE_IMAGE][0])->bitmap, 32, 32, 0);
+	//al_draw_bitmap_region(((A_Image *)g_AssetList[ASSET_TYPE_IMAGE][0])->bitmap, 0, 0, 32, 32, 512, 512, 0);
+	al_draw_scaled_bitmap(((A_Image *)g_AssetList[ASSET_TYPE_IMAGE][0])->bitmap, 0, 0, 32, 32, 0, 0, 512, 512, 0);
 }
 
 void Com_Shutdown()

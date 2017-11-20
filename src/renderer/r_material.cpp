@@ -2,13 +2,16 @@
 
 using namespace rapidxml;
 
+A_Material * defaultMaterial;
+A_Material * whiteMaterial;
+
 void A_Material::Precache()
 {
 	ALLEGRO_FILE * f;
 	f = al_fopen(va("%s%s", MATERIAL_PATH, name), "rb");
 	if (f == NULL)
 	{
-		Com_Error(ERR_FATAL, "Tried to load a non-existent material %s", this->name);
+		Com_Error(ERR_NONE, "Tried to load a non-existent material %s", this->name);
 	}
 	int fsize = al_fsize(f);
 	char *xml_content = (char *)calloc(al_fsize(f)+1, sizeof(char));
@@ -62,7 +65,7 @@ void A_Material::Unload()
 bool R_MaterialSystem_Init()
 {
 	//R_PrecacheMaterial("default");
-	R_CreateDefaultMaterial();
+	R_CreateDefaultMaterials();
 	R_PrecacheMaterial("engine_logo");
 	return true;
 }
@@ -72,7 +75,7 @@ int R_GetMaterialCount()
 	return 0;
 }
 
-void R_CreateDefaultMaterial()
+void R_CreateDefaultMaterials()
 {
 	A_Material * defaultMat = new A_Material();
 	A_Image * defaultTex = new A_Image();
@@ -83,7 +86,7 @@ void R_CreateDefaultMaterial()
 	{
 		for (int x = 0; x < 32; x++)
 		{
-			al_put_pixel(x, y, ((x % 2) + (y % 2)) % 2 ? al_map_rgba(255, 64, 255, 255) : al_map_rgba(64, 255, 64, 255) );
+			al_put_pixel(x, y, ((x % 2) + (y % 2)) % 2 ? al_map_rgba(128, 64, 128, 255) : al_map_rgba(16, 128, 128, 255) );
 		}
 	}
 	al_set_target_bitmap(originalTarget);
