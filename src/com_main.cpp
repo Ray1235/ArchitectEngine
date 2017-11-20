@@ -3,7 +3,6 @@
 
 static int targetRes[2];
 ALLEGRO_EVENT_QUEUE* g_EventQueue;
-static bool testWindow = true;
 
 void Com_Init()
 {
@@ -94,113 +93,111 @@ void Com_Frame()
 		1000.0f / ImGui::GetIO().Framerate);
 	ImGui::End();
 
-	ImGui::ShowTestWindow(&testWindow);
-
-	ImGui::Begin("Assets");
-	//ImGui::InputInt("Type", &currentAssetListType);
-	const char* preview_text = NULL;
-	ImGui::Combo("Type", &currentAssetListType, AssetDB_ImGui_GetTypes, NULL, ASSET_TYPE_MAX+1);
-	if (currentAssetListType <= ASSET_TYPE_MAX && currentAssetListType > 0)
+	if (ImGui::Begin("Assets"))
 	{
-		ImGui::LabelText(va("%d/%d", AssetDB_GetAssetCount(currentAssetListType - 1), DB_AssetTypes[currentAssetListType - 1].maxLimit), "Asset Count:");
-		for (int i = 0; i < g_AssetList[currentAssetListType - 1].size(); i++)
+		ImGui::Combo("Type", &currentAssetListType, AssetDB_ImGui_GetTypes, NULL, ASSET_TYPE_MAX + 1);
+		if (currentAssetListType <= ASSET_TYPE_MAX && currentAssetListType > 0)
 		{
-			A_Asset * asset;
-			if ((asset = AssetDB_GetAsset(currentAssetListType - 1, i)) != NULL)
+			ImGui::LabelText(va("%d/%d", AssetDB_GetAssetCount(currentAssetListType - 1), DB_AssetTypes[currentAssetListType - 1].maxLimit), "Asset Count:");
+			for (int i = 0; i < g_AssetList[currentAssetListType - 1].size(); i++)
 			{
-				if (ImGui::CollapsingHeader(va("%s %s##asset_%d_%d", asset->name, asset->isLoaded ? "(loaded)" : "(unloaded)", currentAssetListType - 1, i)))
+				A_Asset * asset;
+				if ((asset = AssetDB_GetAsset(currentAssetListType - 1, i)) != NULL)
 				{
-					if (asset->isLoaded)
+					if (ImGui::CollapsingHeader(va("%s %s##asset_%d_%d", asset->name, asset->isLoaded ? "(loaded)" : "(unloaded)", currentAssetListType - 1, i)))
 					{
-						if (currentAssetListType - 1 == ASSET_TYPE_IMAGE)
+						if (asset->isLoaded)
 						{
-							if (((A_Image *)asset)->bitmap)
+							if (currentAssetListType - 1 == ASSET_TYPE_IMAGE)
 							{
-								ImGui::Image(((A_Image *)asset)->bitmap, ImVec2(32, 32));
-								if (ImGui::IsItemHovered())
+								if (((A_Image *)asset)->bitmap)
 								{
-									ImGui::BeginTooltip();
-									ImGui::Text("Size: %dx%d", al_get_bitmap_width(((A_Image *)asset)->bitmap), al_get_bitmap_height(((A_Image *)asset)->bitmap));
-									ImGui::EndTooltip();
+									ImGui::Image(((A_Image *)asset)->bitmap, ImVec2(32, 32));
+									if (ImGui::IsItemHovered())
+									{
+										ImGui::BeginTooltip();
+										ImGui::Text("Size: %dx%d", al_get_bitmap_width(((A_Image *)asset)->bitmap), al_get_bitmap_height(((A_Image *)asset)->bitmap));
+										ImGui::EndTooltip();
+									}
 								}
 							}
+							else if (currentAssetListType - 1 == ASSET_TYPE_MATERIAL)
+							{
+								ImGui::Text("Color map: %s", ((A_Material *)asset)->color->name);
+								if (((A_Material *)asset)->isEmissive)
+									ImGui::Text("Emissive map: %s", ((A_Material *)asset)->emissive->name);
+							}
+							if (0) // damn, this is broken as hell //if (ImGui::Button(va("Unload asset##assetl_%d_%d", currentAssetListType - 1, i)))
+							{
+								asset->Unload();
+							}
 						}
-						else if (currentAssetListType - 1 == ASSET_TYPE_MATERIAL)
+						else
 						{
-							ImGui::Text("Color map: %s", ((A_Material *)asset)->color->name);
-							if(((A_Material *)asset)->isEmissive)
-								ImGui::Text("Emissive map: %s", ((A_Material *)asset)->emissive->name);
-						}
-						if(0) // damn, this is broken as hell //if (ImGui::Button(va("Unload asset##assetl_%d_%d", currentAssetListType - 1, i)))
-						{
-							asset->Unload();
-						}
-					}
-					else
-					{
-						ImGui::Text("This asset is currently unloaded, but you can force load it.");
-						if (ImGui::Button(va("Force load##assetl_%d_%d", currentAssetListType - 1, i)))
-						{
-							asset->Precache();
+							ImGui::Text("This asset is currently unloaded, but you can force load it.");
+							if (ImGui::Button(va("Force load##assetl_%d_%d", currentAssetListType - 1, i)))
+							{
+								asset->Precache();
+							}
 						}
 					}
 				}
 			}
 		}
-	}
-	if (currentAssetListType == 0)
-	{
+		if (currentAssetListType == 0)
 		{
-			for (int i = 0; i < ASSET_TYPE_MAX; i++)
 			{
-				if (ImGui::CollapsingHeader(va("%s##AssetI%d", DB_AssetTypes[i].name, i)))
+				for (int i = 0; i < ASSET_TYPE_MAX; i++)
 				{
-					ImGui::Indent();
-					for (int o = 0; o < g_AssetList[i].size(); o++)
+					if (ImGui::CollapsingHeader(va("%s##AssetI%d", DB_AssetTypes[i].name, i)))
 					{
-						if (g_AssetList[i][o] != NULL) ImGui::Text(va("%s %s", g_AssetList[i][o]->name, g_AssetList[i][o]->isLoaded ? "(loaded)" : "(unloaded)"));
+						ImGui::Indent();
+						for (int o = 0; o < g_AssetList[i].size(); o++)
+						{
+							if (g_AssetList[i][o] != NULL) ImGui::Text(va("%s %s", g_AssetList[i][o]->name, g_AssetList[i][o]->isLoaded ? "(loaded)" : "(unloaded)"));
+						}
+						ImGui::Unindent();
 					}
-					ImGui::Unindent();
 				}
 			}
 		}
 	}
 	ImGui::End();
 
-	ImGui::Begin("Main"); /* Main game debug window */
-
-	if(ImGui::Button("Close game"))
+	if (ImGui::Begin("Main")) /* Main game debug window */
 	{
-		shouldClose = true;
+		if (ImGui::Button("Close game"))
+		{
+			shouldClose = true;
+		}
+
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("Error Test"))
+		{
+			if (ImGui::Button("Normal Error"))
+				Com_Error(ERR_NONE, "Normal %s test", "error");
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Fatal Error"))
+				Com_Error(ERR_FATAL, "Fatal %s test", "error");
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Drop Error"))
+				Com_Error(ERR_DROP, "Drop %s test", "error");
+		}
+
+		ImGui::Separator(); /* Resolution */
+
+		ImGui::InputInt2("Resolution", targetRes);
+		if (ImGui::Button("Apply"))
+		{
+			R_SetDisplayRes(targetRes[0], targetRes[1]);
+			R_RefreshDisplay();
+		}
 	}
-
-	ImGui::Separator();
-
-	if(ImGui::CollapsingHeader("Error Test"))
-	{
-		if(ImGui::Button("Normal Error"))
-			Com_Error(ERR_NONE, "Normal %s test", "error");
-
-		ImGui::SameLine();
-
-		if(ImGui::Button("Fatal Error"))
-			Com_Error(ERR_FATAL, "Fatal %s test", "error");
-
-		ImGui::SameLine();
-
-		if(ImGui::Button("Drop Error"))
-			Com_Error(ERR_DROP, "Drop %s test", "error");
-	}
-
-	ImGui::Separator(); /* Resolution */
-
-	ImGui::InputInt2("Resolution", targetRes);
-	if(ImGui::Button("Apply"))
-	{
-		R_SetDisplayRes(targetRes[0], targetRes[1]);
-		R_RefreshDisplay();
-	}
-
 	ImGui::End();
 
 	if (nextDiscordPresenceUpdate < al_get_time())
