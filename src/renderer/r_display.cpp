@@ -13,7 +13,7 @@ ALLEGRO_DISPLAY *R_InitDisplay(int defWidth, int defHeight)
 {
 	displayWidth = defWidth;
 	displayHeight = defHeight;
-
+	al_set_new_display_flags(ALLEGRO_OPENGL);
 	gameDisplay = al_create_display(displayWidth, displayHeight);
 
 	return gameDisplay;

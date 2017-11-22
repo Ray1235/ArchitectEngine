@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 		UI_BeginFrame();
 
 		Com_Frame();
+		UI_Frame();
 
 		UI_EndFrame();
 		R_EndFrame();
