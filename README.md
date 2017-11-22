@@ -1,2 +1,2 @@
 # Architect
-A cross-platform game engine made in Allegro 5
+A cross-platform game engine made in C++ & SFML
