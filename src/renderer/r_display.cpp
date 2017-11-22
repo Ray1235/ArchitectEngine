@@ -7,23 +7,29 @@ static int displayHeight = 0;
 static int latchedDisplayWidth = 0;
 static int latchedDisplayHeight = 0;
 
-static ALLEGRO_DISPLAY *gameDisplay = 0;
+static sf::RenderWindow gameDisplay;
 
-ALLEGRO_DISPLAY *R_InitDisplay(int defWidth, int defHeight)
+sf::RenderWindow *R_InitDisplay(int defWidth, int defHeight)
 {
 	displayWidth = defWidth;
 	displayHeight = defHeight;
-	al_set_new_display_flags(ALLEGRO_OPENGL);
-	gameDisplay = al_create_display(displayWidth, displayHeight);
 
-	return gameDisplay;
+	gameDisplay.create(sf::VideoMode(displayWidth, displayHeight), "Architect");
+
+	return &gameDisplay;
 }
 
-ALLEGRO_DISPLAY *R_GetDisplay() { return gameDisplay; }
+sf::RenderWindow *R_GetDisplay() { return &gameDisplay; }
+
+sf::RenderTarget * R_GetRenderTarget()
+{
+	return &gameDisplay;
+}
 
 void R_ShutdownDisplay()
 {
-	al_destroy_display(gameDisplay);
+	gameDisplay.close();
+	//al_destroy_display(gameDisplay);
 }
 
 int R_GetDisplayWidth() { return displayWidth; }
@@ -39,6 +45,8 @@ bool R_RefreshDisplay()
 {
 	displayWidth = latchedDisplayWidth;
 	displayHeight = latchedDisplayHeight;
-	al_resize_display(gameDisplay, displayWidth, displayHeight);
+	//al_resize_display(gameDisplay, displayWidth, displayHeight);
+	gameDisplay.close();
+	gameDisplay.create(sf::VideoMode(displayWidth, displayHeight), "Architect");
 	return true;
 }

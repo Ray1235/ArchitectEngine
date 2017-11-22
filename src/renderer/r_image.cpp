@@ -2,15 +2,18 @@
 
 void A_Image::Precache()
 {
-	this->bitmap = al_load_bitmap(va("%s%s.tga", IMAGE_PATH, this->name));
-	if (this->bitmap)
+	this->image = new sf::Image();
+	if(this->image->loadFromFile(va("%s%s.tga", IMAGE_PATH, name)))
 	{
+		this->gpuTexture = new sf::Texture();
+		this->gpuTexture->loadFromImage(*this->image);
 		isLoaded = true;
 	}
 }
 
 void A_Image::Unload()
 {
-	al_destroy_bitmap(this->bitmap);
+	//delete this->gpuTexture;
+	//delete this->image;
 	isLoaded = false;
 }

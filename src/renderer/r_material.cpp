@@ -7,15 +7,17 @@ A_Material * whiteMaterial;
 
 void A_Material::Precache()
 {
-	ALLEGRO_FILE * f;
-	f = al_fopen(va("%s%s", MATERIAL_PATH, name), "rb");
+	FILE *f;
+	f = fopen(va("%s%s", MATERIAL_PATH, name), "rb");
 	if (f == NULL)
 	{
 		Com_Error(ERR_NONE, "Tried to load a non-existent material %s", this->name);
 	}
-	int fsize = al_fsize(f);
-	char *xml_content = (char *)calloc(al_fsize(f)+1, sizeof(char));
-	al_fread(f, xml_content, al_fsize(f));
+	fseek(f, 0, SEEK_END);
+	int fsize = ftell(f);
+	fseek(f, 0, SEEK_SET);
+	char *xml_content = (char *)calloc(fsize+1, sizeof(char));
+	fread(xml_content, 1, fsize, f);
 	xml_document<> mat;
 	mat.parse<0>(xml_content);
 	
@@ -57,14 +59,11 @@ void A_Material::Precache()
 
 void A_Material::Unload()
 {
-	//if(color) al_destroy_bitmap(color);
-	//if(emissive) al_destroy_bitmap(emissive);
 	isLoaded = false;
 }
 
 bool R_MaterialSystem_Init()
 {
-	//R_PrecacheMaterial("default");
 	R_CreateDefaultMaterials();
 	R_PrecacheMaterial("engine_logo");
 	return true;
@@ -75,23 +74,25 @@ int R_GetMaterialCount()
 	return 0;
 }
 
+sf::Image defaultTexture;
+sf::Texture defaultTextureGPU;
+
 void R_CreateDefaultMaterials()
 {
 	A_Material * defaultMat = new A_Material();
 	A_Image * defaultTex = new A_Image();
-	ALLEGRO_BITMAP * defaultTexBitmap = al_create_bitmap(32, 32);
-	ALLEGRO_BITMAP * originalTarget = al_get_target_bitmap();
-	al_set_target_bitmap(defaultTexBitmap);
+	defaultTexture.create(32, 32);
 	for (int y = 0; y < 32; y++)
 	{
 		for (int x = 0; x < 32; x++)
 		{
-			al_put_pixel(x, y, ((x % 2) + (y % 2)) % 2 ? al_map_rgba(128, 64, 128, 255) : al_map_rgba(16, 128, 128, 255) );
+			defaultTexture.setPixel(x, y, ((x % 2) + (y % 2)) % 2 ? sf::Color(128, 64, 128, 255) : sf::Color(16, 128, 128, 255));
 		}
 	}
-	al_set_target_bitmap(originalTarget);
+	defaultTextureGPU.loadFromImage(defaultTexture);
 
-	defaultTex->bitmap = defaultTexBitmap;
+	defaultTex->gpuTexture = &defaultTextureGPU;
+	defaultTex->image = &defaultTexture;
 	defaultTex->name = "default";
 	defaultTex->isLoaded = true;
 

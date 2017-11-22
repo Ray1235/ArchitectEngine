@@ -1,6 +1,5 @@
 #pragma once
 #include "../common.h"
-#include <allegro5/allegro.h>
 
 #define MATERIAL_PATH "main/materials/"
 

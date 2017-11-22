@@ -1,6 +1,5 @@
 #pragma once
 #include "common.h"
-#include <allegro5/allegro.h>
 
 #define DEFINE_ASSET_TYPE(name, limit) {name, #name, limit}
 

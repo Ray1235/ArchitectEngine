@@ -13,11 +13,12 @@
 struct ALLEGRO_DISPLAY;
 union ALLEGRO_EVENT;
 
-IMGUI_API bool    	UI_ImGui_Init(ALLEGRO_DISPLAY* display);
+IMGUI_API bool    	UI_ImGui_Init(sf::RenderTarget *renderTarget, bool loadDefaultFont = true);
 IMGUI_API void    	UI_ImGui_Shutdown();
-IMGUI_API void    	UI_ImGui_NewFrame();
-IMGUI_API void 		UI_ImGui_EndFrame();
-IMGUI_API bool    	UI_ImGui_ProcessEvent(ALLEGRO_EVENT* event);
+IMGUI_API void    	UI_ImGui_NewFrame(sf::RenderWindow *window, sf::Time dt);
+IMGUI_API void    	UI_ImGui_NewFrame(sf::Window *window, sf::RenderTarget *target, sf::Time dt);
+IMGUI_API void    	UI_ImGui_NewFrame(const sf::Vector2i& mousePos, const sf::Vector2f& displaySize, sf::Time dt);
+IMGUI_API void 		UI_ImGui_EndFrame(sf::RenderTarget* target);
+IMGUI_API bool    	UI_ImGui_ProcessEvent(const sf::Event& ev);
 
-IMGUI_API bool    	UI_ImGui_CreateDeviceObjects();
-IMGUI_API void    	UI_ImGui_InvalidateDeviceObjects();
+IMGUI_API void		UI_ImGui_UpdateFontTexture();

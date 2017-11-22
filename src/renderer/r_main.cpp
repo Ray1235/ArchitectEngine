@@ -1,15 +1,6 @@
 #include "../common.h"
 #include "r_display.h"
-
-#include <allegro5\allegro_opengl.h>
-#include <gl\GL.h>
-
-
-static const GLfloat g_vertex_buffer_data[] = {
-	-1.0f, -1.0f, 0.0f,
-	1.0f, -1.0f, 0.0f,
-	0.0f,  1.0f, 0.0f,
-};
+#include <SFML\OpenGL.hpp>
 
 bool R_Init()
 {
@@ -27,15 +18,17 @@ bool R_Init()
 
 void R_Shutdown()
 {
-
+	R_ShutdownDisplay();
 }
 
 void R_BeginFrame()
 {
-	al_clear_to_color(al_map_rgba(0, 0, 0, 255));
+	glClear(GL_COLOR_BUFFER_BIT);	
+	//al_clear_to_color(al_map_rgba(0, 0, 0, 255));
 }
 
 void R_EndFrame()
 {
-	al_flip_display();
+	R_GetDisplay()->display();
+	//al_flip_display();
 }

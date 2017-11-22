@@ -15,10 +15,16 @@
 
 #include <stdio.h>
 #include <assert.h>
+/*
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_native_dialog.h>
+*/
+
+#include <SFML\Main.hpp>
+#include <SFML\Window.hpp>
+
 //#include <allegro5/allegro_physfs.h>
 //#include <physfs.h>
 #include "rapidxml/rapidxml.hpp"
@@ -37,4 +43,6 @@
 
 extern bool shouldClose;
 
-extern ALLEGRO_EVENT_QUEUE* g_EventQueue;
+extern sf::Clock g_mainDTClock;
+extern sf::Clock g_mainTClock;
+extern sf::Time g_deltaTime;

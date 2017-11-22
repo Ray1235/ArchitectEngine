@@ -24,7 +24,7 @@ void UI_Shutdown()
 
 void UI_BeginFrame()
 {
-	UI_ImGui_NewFrame();
+	UI_ImGui_NewFrame(R_GetDisplay(), g_deltaTime);
 }
 
 void UI_Frame()
@@ -53,13 +53,13 @@ void UI_Frame()
 						{
 							if (currentAssetListType - 1 == ASSET_TYPE_IMAGE)
 							{
-								if (((A_Image *)asset)->bitmap)
+								if (((A_Image *)asset)->image)
 								{
-									ImGui::Image(((A_Image *)asset)->bitmap, ImVec2(32, 32));
+									ImGui::Image((ImTextureID)((A_Image *)asset)->gpuTexture->getNativeHandle(), ImVec2(32, 32));
 									if (ImGui::IsItemHovered())
 									{
 										ImGui::BeginTooltip();
-										ImGui::Text("Size: %dx%d", al_get_bitmap_width(((A_Image *)asset)->bitmap), al_get_bitmap_height(((A_Image *)asset)->bitmap));
+										ImGui::Text("Size: %dx%d", ((A_Image *)asset)->image->getSize().x, ((A_Image *)asset)->image->getSize().y);
 										ImGui::EndTooltip();
 									}
 								}
@@ -146,10 +146,10 @@ void UI_Frame()
 
 void UI_EndFrame()
 {
-	UI_ImGui_EndFrame();
+	UI_ImGui_EndFrame(R_GetDisplay());
 }
 
-void UI_ProcessEvent(ALLEGRO_EVENT* event)
+void UI_ProcessEvent(sf::Event &event)
 {
 	UI_ImGui_ProcessEvent(event);
 }
