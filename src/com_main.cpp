@@ -84,6 +84,9 @@ void Com_ErrorEx(int level, char * source, char * msg)
 			NULL,
 			ALLEGRO_MESSAGEBOX_ERROR);
 		*/
+#ifdef _WIN32
+		//MessageBox(R_GetDisplay()->getSystemHandle(), va("%s\n%s", source, msg), "Error", 0);
+#endif
 	}
 
 #ifdef _WIN32
