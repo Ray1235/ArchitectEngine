@@ -12,7 +12,7 @@ void A_Material::Precache()
 	f = fopen(va("%s%s", MATERIAL_PATH, name), "rb");
 	if (f == NULL)
 	{
-		Com_Error(ERR_NONE, "Tried to load a non-existent material %s", this->name);
+		Com_Error(ERR_FATAL, "Tried to load a non-existent material %s", this->name);
 	}
 	fseek(f, 0, SEEK_END);
 	int fsize = ftell(f);

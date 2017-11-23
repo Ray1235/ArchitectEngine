@@ -4,8 +4,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 
+#ifdef _USE_DISCORD
 #ifdef _M_AMD64
 #include <discord-rpc.h>
+#endif
 #endif
 
 #endif

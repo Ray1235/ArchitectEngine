@@ -75,15 +75,6 @@ void Com_ErrorEx(int level, char * source, char * msg)
 
 	if (level > ERR_NONE)
 	{
-		/*
-		al_show_native_message_box(
-			R_GetDisplay(),
-			"Error",
-			source,
-			msg,
-			NULL,
-			ALLEGRO_MESSAGEBOX_ERROR);
-		*/
 #ifdef _WIN32
 		MessageBox(R_GetDisplay()->getSystemHandle(), va("%s\n%s", source, msg), "Error", MB_ICONERROR | MB_OK);
 #endif

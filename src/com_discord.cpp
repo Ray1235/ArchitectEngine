@@ -1,5 +1,6 @@
 #include "common.h"
 #include "com_discord.h"
+#ifdef _USE_DISCORD
 #include "com_discord_secret.h"
 
 void __internal_Com_Discord_Ready()
@@ -31,4 +32,17 @@ void Com_Discord_UpdatePresence()
 void Com_Discord_Shutdown()
 {
 	Discord_Shutdown();
+}
+#endif
+
+void Com_Discord_Init()
+{
+}
+
+void Com_Discord_UpdatePresence()
+{
+}
+
+void Com_Discord_Shutdown()
+{
 }
