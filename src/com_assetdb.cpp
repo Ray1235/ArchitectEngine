@@ -64,7 +64,7 @@ A_Asset * AssetDB_GetAssetByName(int type, char * name)
 			return g_AssetList[type][i];
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 bool AssetDB_ImGui_GetTypes(void * ptr, int index, const char ** output)

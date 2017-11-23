@@ -10,6 +10,8 @@ public:
 	sf::Image *image;
 	sf::Texture *gpuTexture;
 
+	bool useMipMaps = false;
+
 	void Precache();
 	void Unload();
 

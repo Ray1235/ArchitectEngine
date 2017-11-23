@@ -7,6 +7,7 @@ A_Material * whiteMaterial;
 
 void A_Material::Precache()
 {
+	Com_Printf("Loading material %s...", name);
 	FILE *f;
 	f = fopen(va("%s%s", MATERIAL_PATH, name), "rb");
 	if (f == NULL)
@@ -33,21 +34,48 @@ void A_Material::Precache()
 	xml_node<> *emissiveN = matN->first_node("emissive");
 	if (colorN && colorN->value())
 	{
-		//color = al_load_bitmap(colorN->value());
-		A_Image * colorI = new A_Image();
-		colorI->name = new char[strlen(colorN->value()) + 1];
-		strcpy(colorI->name, colorN->value());
-		colorI->Precache();
-		AssetDB_AddAsset(ASSET_TYPE_IMAGE, colorI);
+		A_Image * colorI;
+		if ((colorI = (A_Image *)AssetDB_GetAssetByName(ASSET_TYPE_IMAGE, colorN->value())) == NULL)
+		{
+			Com_Printf("Loading image %s...\n", colorN->value());
+			//color = al_load_bitmap(colorN->value());
+			colorI = new A_Image();
+			colorI->name = new char[strlen(colorN->value()) + 1];
+			strcpy(colorI->name, colorN->value());
+
+			if (colorN->first_attribute("nomip"))
+			{
+				colorI->useMipMaps = false;
+			}
+			else {
+				colorI->useMipMaps = true;
+			}
+
+			colorI->Precache();
+			AssetDB_AddAsset(ASSET_TYPE_IMAGE, colorI);
+		}
+		else {
+
+		}
 		this->color = colorI;
 	}
 	if (emissiveN && emissiveN->value())
 	{
+		Com_Printf("Loading image %s...\n", emissiveN->value());
 		isEmissive = true;
 		//emissive = al_load_bitmap(emissiveN->value());
 		A_Image * emissiveI = new A_Image();
 		emissiveI->name = new char[strlen(emissiveN->value()) + 1];
 		strcpy(emissiveI->name, emissiveN->value());
+
+		if (emissiveN->first_attribute("nomip"))
+		{
+			emissiveI->useMipMaps = false;
+		}
+		else {
+			emissiveI->useMipMaps = true;
+		}
+
 		emissiveI->Precache();
 		AssetDB_AddAsset(ASSET_TYPE_IMAGE, emissiveI);
 		this->emissive = emissiveI;
@@ -66,6 +94,7 @@ bool R_MaterialSystem_Init()
 {
 	R_CreateDefaultMaterials();
 	R_PrecacheMaterial("engine_logo");
+	R_PrecacheMaterial("engine_logo_nomip");
 	return true;
 }
 

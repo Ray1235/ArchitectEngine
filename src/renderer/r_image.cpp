@@ -7,6 +7,11 @@ void A_Image::Precache()
 	{
 		this->gpuTexture = new sf::Texture();
 		this->gpuTexture->loadFromImage(*this->image);
+		if (this->useMipMaps)
+		{
+			this->gpuTexture->generateMipmap();
+			this->gpuTexture->setSmooth(true);
+		}
 		isLoaded = true;
 	}
 }
