@@ -33,7 +33,8 @@ void Com_Discord_Shutdown()
 {
 	Discord_Shutdown();
 }
-#endif
+
+#else
 
 void Com_Discord_Init()
 {
@@ -46,3 +47,5 @@ void Com_Discord_UpdatePresence()
 void Com_Discord_Shutdown()
 {
 }
+
+#endif
