@@ -14,6 +14,9 @@
     <Filter Include="Source Files\UI\ImGui">
       <UniqueIdentifier>{f44dd0d9-8c03-486c-8ee0-168b844afda6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\UI\Nuklear">
+      <UniqueIdentifier>{e1ab6787-620c-492b-8ba6-ec7bf30d6a4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\com_main.cpp">
@@ -57,6 +60,12 @@
     </ClCompile>
     <ClCompile Include="..\src\com_discord.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\nuklear\ui_nuklear_class.cpp">
+      <Filter>Source Files\UI\Nuklear</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\nuklear\ui_nuklear_sfml.cpp">
+      <Filter>Source Files\UI\Nuklear</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +119,12 @@
     </ClInclude>
     <ClInclude Include="..\src\com_discord_secret.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\nuklear\nuklear.h">
+      <Filter>Source Files\UI\Nuklear</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\nuklear\ui_nuklear_class.h">
+      <Filter>Source Files\UI\Nuklear</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

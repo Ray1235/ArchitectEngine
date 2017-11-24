@@ -32,7 +32,7 @@ void Com_Frame()
 	while (R_GetDisplay()->pollEvent(ev))
 	{
 		if (ev.type == sf::Event::Closed) shouldClose = true;
-		UI_ImGui_ProcessEvent(ev);
+		UI_ProcessEvent(ev);
 	}
 
 	if (nextDiscordPresenceUpdate < g_mainDTClock.getElapsedTime().asSeconds() )
@@ -76,7 +76,7 @@ void Com_ErrorEx(int level, char * source, char * msg)
 	if (level > ERR_NONE)
 	{
 #ifdef _WIN32
-		MessageBox(R_GetDisplay()->getSystemHandle(), va("%s\n%s", source, msg), "Error", MB_ICONERROR | MB_OK);
+		MessageBox(R_GetDisplay()->getSystemHandle(), va("%s\n%s%s", source, msg, level == ERR_FATAL ? "\n\nThe game will now close" : ""), "Error", MB_ICONERROR | MB_OK);
 #endif
 	}
 

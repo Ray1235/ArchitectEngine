@@ -1,14 +1,23 @@
 #include "../common.h"
 #include "../renderer/r_display.h"
 #include "ui_imgui.h"
+#include "nuklear\ui_nuklear_class.h"
 
 static int targetRes[2];
 
 static int currentAssetListType = 0;
 
+UI_Nuklear g_UINuklear;
+
 bool UI_Init()
 {
+#ifdef __USE_IMGUI
 	if(!UI_ImGui_Init(R_GetDisplay()))
+	{
+		return false;
+	}
+#endif
+	if (!g_UINuklear.Init(R_GetDisplay()))
 	{
 		return false;
 	}
@@ -19,16 +28,23 @@ bool UI_Init()
 
 void UI_Shutdown()
 {
+#ifdef __USE_IMGUI
 	UI_ImGui_Shutdown();
+#endif
+	g_UINuklear.Shutdown();
 }
 
 void UI_BeginFrame()
 {
+#ifdef __USE_IMGUI
 	UI_ImGui_NewFrame(R_GetDisplay(), g_deltaTime);
+#endif
+	g_UINuklear.BeginFrame();
 }
 
 void UI_Frame()
 {
+#ifdef __USE_IMGUI
 	ImGui::SetNextWindowPos(ImVec2(2, 2));
 	ImGui::Begin("Performance", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_ShowBorders);
 	ImGui::Text("%.1f FPS (%.3f ms/frame)",
@@ -142,14 +158,23 @@ void UI_Frame()
 		}
 	}
 	ImGui::End();
+#endif
+	g_UINuklear.Draw();
 }
 
 void UI_EndFrame()
 {
+#ifdef __USE_IMGUI
 	UI_ImGui_EndFrame(R_GetDisplay());
+#endif
+	g_UINuklear.EndFrame();
+	g_UINuklear.Render();
 }
 
 void UI_ProcessEvent(sf::Event &event)
 {
+#ifdef __USE_IMGUI
 	UI_ImGui_ProcessEvent(event);
+#endif
+	g_UINuklear.ProcessEvent(&event);
 }

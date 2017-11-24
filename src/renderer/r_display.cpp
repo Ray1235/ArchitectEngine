@@ -13,8 +13,8 @@ sf::RenderWindow *R_InitDisplay(int defWidth, int defHeight)
 {
 	displayWidth = defWidth;
 	displayHeight = defHeight;
-
-	gameDisplay.create(sf::VideoMode(displayWidth, displayHeight), "Architect");
+	
+	gameDisplay.create(sf::VideoMode(displayWidth, displayHeight), "Architect", sf::Style::Default, sf::ContextSettings(24, 8, 4, 3, 3));
 
 	return &gameDisplay;
 }
@@ -46,7 +46,6 @@ bool R_RefreshDisplay()
 	displayWidth = latchedDisplayWidth;
 	displayHeight = latchedDisplayHeight;
 	//al_resize_display(gameDisplay, displayWidth, displayHeight);
-	gameDisplay.close();
-	gameDisplay.create(sf::VideoMode(displayWidth, displayHeight), "Architect");
+	gameDisplay.setSize(sf::Vector2u(displayWidth, displayHeight));
 	return true;
 }
